@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class ArticleMapper {
     public ArticleDTO convertArticleEntityToArticleDTO(Article article){
         ArticleDTO articleDTO = new ArticleDTO();
+        articleDTO.setId(article.getId());
         articleDTO.setTitle(article.getTitle());
         articleDTO.setContent(article.getContent());
         articleDTO.setDescription(article.getDescription());

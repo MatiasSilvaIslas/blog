@@ -7,6 +7,9 @@ import com.matias.blog.repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ArticleServiceImpl implements ArticleService{
     @Autowired
@@ -18,5 +21,11 @@ public class ArticleServiceImpl implements ArticleService{
         Article article = articleMapper.convertArticleDTOToArticleEntity(articleDTO);
         Article publishedArticle = articleRepository.save(article);
         return articleMapper.convertArticleEntityToArticleDTO(publishedArticle);
+    }
+
+    @Override
+    public List<ArticleDTO> getAllAtricles() {
+        List<Article> articles = articleRepository.findAll();
+        return articles.stream().map(article -> articleMapper.convertArticleEntityToArticleDTO(article)).collect(Collectors.toList());
     }
 }
