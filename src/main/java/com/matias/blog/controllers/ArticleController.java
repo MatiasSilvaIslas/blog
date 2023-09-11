@@ -24,4 +24,16 @@ public class ArticleController {
     public List<ArticleDTO> listArticles(){
         return articleService.getAllAtricles();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArticleDTO> getArticleById(@PathVariable(name = "id") long id){
+        return  ResponseEntity.ok(articleService.getArticleById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ArticleDTO> updateArticle(@RequestBody ArticleDTO articleDTO,
+    @PathVariable(name = "id") long id){
+        ArticleDTO responseArticle = articleService.updateArticle(articleDTO, id);
+        return new ResponseEntity<>(responseArticle, HttpStatus.OK);
+    }
 }
