@@ -1,6 +1,7 @@
 package com.matias.blog.services;
 
 import com.matias.blog.dto.ArticleDTO;
+import com.matias.blog.dto.ArticleResponse;
 import com.matias.blog.entities.Article;
 import com.matias.blog.exceptions.ResourceNotFoundException;
 import com.matias.blog.mapper.ArticleMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +30,23 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public List<ArticleDTO> getAllAtricles(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public ArticleResponse getAllAtricles(int pageNumber, int pageSize,String orderBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(orderBy).ascending():Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Article> articles = articleRepository.findAll(pageable);
+
         List<Article> articlesList = articles.getContent();
-        return articlesList.stream().map(article -> articleMapper.convertArticleEntityToArticleDTO(article)).collect(Collectors.toList());
+        List<ArticleDTO> content =  articlesList.stream().map(article -> articleMapper.convertArticleEntityToArticleDTO(article)).collect(Collectors.toList());
+
+        ArticleResponse articleResponse = new ArticleResponse();
+        articleResponse.setContent(content);
+        articleResponse.setPageNumber(articles.getNumber());
+        articleResponse.setPageSize(articles.getSize());
+        articleResponse.setTotalElements(articles.getTotalElements());
+        articleResponse.setTotalPages(articles.getTotalPages());
+        articleResponse.setLast(articles.isLast());
+
+        return  articleResponse;
     }
 
     @Override
