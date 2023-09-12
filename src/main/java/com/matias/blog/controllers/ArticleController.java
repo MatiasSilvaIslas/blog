@@ -3,6 +3,7 @@ package com.matias.blog.controllers;
 import com.matias.blog.dto.ArticleDTO;
 import com.matias.blog.dto.ArticleResponse;
 import com.matias.blog.services.ArticleService;
+import com.matias.blog.utils.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,10 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
     @GetMapping()
-    public ArticleResponse listArticles(@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
-                                        @RequestParam(value = "pageSize", defaultValue = "10",required = false) int pageSize,
-                                        @RequestParam(value = "sortBy", defaultValue = "id",required = false) String orderBy,
-                                        @RequestParam(value = "sortDir", defaultValue = "asc",required = false) String sortDir){
+    public ArticleResponse listArticles(@RequestParam(value = "pageNumber", defaultValue = AppConst.DEFAULT_PAGE_NUMBER, required = false) int pageNumber,
+                                        @RequestParam(value = "pageSize", defaultValue = AppConst.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+                                        @RequestParam(value = "sortBy", defaultValue = AppConst.DEFAULT_ORDER, required = false) String orderBy,
+                                        @RequestParam(value = "sortDir", defaultValue = AppConst.DEFAULT_DIRECTION, required = false) String sortDir){
         return articleService.getAllAtricles(pageNumber,pageSize,orderBy,sortDir);
     }
 
