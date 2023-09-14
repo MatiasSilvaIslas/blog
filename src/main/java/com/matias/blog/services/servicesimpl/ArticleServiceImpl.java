@@ -1,4 +1,4 @@
-package com.matias.blog.services;
+package com.matias.blog.services.servicesimpl;
 
 import com.matias.blog.dto.ArticleDTO;
 import com.matias.blog.dto.ArticleResponse;
@@ -6,6 +6,7 @@ import com.matias.blog.entities.Article;
 import com.matias.blog.exceptions.ResourceNotFoundException;
 import com.matias.blog.mapper.ArticleMapper;
 import com.matias.blog.repositories.ArticleRepository;
+import com.matias.blog.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ArticleServiceImpl implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleRepository articleRepository;
     @Autowired

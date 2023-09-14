@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "article", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
 @AllArgsConstructor
@@ -24,4 +27,7 @@ public class Article {
     private String description;
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<Comment> comments = new HashSet<>();
 }
