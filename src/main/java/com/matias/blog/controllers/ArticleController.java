@@ -4,6 +4,7 @@ import com.matias.blog.dto.ArticleDTO;
 import com.matias.blog.dto.ArticleResponse;
 import com.matias.blog.services.ArticleService;
 import com.matias.blog.utils.AppConst;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public class ArticleController {
         return  ResponseEntity.ok(articleService.getArticleById(id));
     }
     @PostMapping
-    public ResponseEntity<ArticleDTO> saveArticle(@RequestBody ArticleDTO articleDTO){
+    public ResponseEntity<ArticleDTO> saveArticle(@Valid @RequestBody ArticleDTO articleDTO){
         return new ResponseEntity<>(articleService.createArticle(articleDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArticleDTO> updateArticle(@RequestBody ArticleDTO articleDTO,
+    public ResponseEntity<ArticleDTO> updateArticle(@Valid @RequestBody ArticleDTO articleDTO,
     @PathVariable(name = "id") long id){
         ArticleDTO responseArticle = articleService.updateArticle(articleDTO, id);
         return new ResponseEntity<>(responseArticle, HttpStatus.OK);
