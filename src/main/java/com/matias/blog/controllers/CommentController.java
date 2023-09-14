@@ -36,4 +36,10 @@ public class CommentController {
         CommentDTO updatedComment = commentService.updateComment(articleId,id, commentDTO);
         return new ResponseEntity<>(updatedComment, HttpStatus.OK);
     }
+
+    @DeleteMapping("articles/{articleId}/comments/{id}")
+    ResponseEntity<String> deleteComment(@PathVariable (value = "articleId") Long articleId, @PathVariable (value = "id") Long id){
+        commentService.deleteCommentById(articleId,id);
+       return new ResponseEntity<>("Comment successfully deleted", HttpStatus.OK);
+    }
 }

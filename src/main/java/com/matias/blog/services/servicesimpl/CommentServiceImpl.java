@@ -76,4 +76,18 @@ public class CommentServiceImpl implements CommentService {
         Comment updatedComment = commentRepository.save(comment);
         return commentMapper.convertCommentEntityToCommentDTO(updatedComment);
     }
+
+    @Override
+    public void deleteCommentById(Long articleId, Long commentId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+
+        if(!comment.getArticle().getId().equals(article.getId())){
+            throw new BlogAppException(HttpStatus.BAD_REQUEST, "The comment does not belong to the article");
+        }
+        commentRepository.delete(comment);
+    }
 }
