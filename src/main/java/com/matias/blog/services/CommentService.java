@@ -2,6 +2,10 @@ package com.matias.blog.services;
 
 import com.matias.blog.dto.CommentDTO;
 
+import java.util.List;
+
 public interface CommentService {
-    public CommentDTO createComment(long articleId, CommentDTO commentDTO);
+    CommentDTO createComment(Long articleId, CommentDTO commentDTO);
+    List<CommentDTO> getCommentsByArticleId(Long articleId);
+    CommentDTO getCommentById(Long commentId, Long articleId);
 }

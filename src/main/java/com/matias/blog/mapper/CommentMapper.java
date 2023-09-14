@@ -2,7 +2,9 @@ package com.matias.blog.mapper;
 
 import com.matias.blog.dto.CommentDTO;
 import com.matias.blog.entities.Comment;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CommentMapper {
     public CommentDTO convertCommentEntityToCommentDTO(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
