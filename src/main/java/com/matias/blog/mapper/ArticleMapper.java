@@ -12,6 +12,7 @@ public class ArticleMapper {
         articleDTO.setTitle(article.getTitle());
         articleDTO.setContent(article.getContent());
         articleDTO.setDescription(article.getDescription());
+        articleDTO.setComments(article.getComments());
         return articleDTO;
     }
 
@@ -20,6 +21,7 @@ public class ArticleMapper {
         article.setTitle(articleDTO.getTitle());
         article.setContent(articleDTO.getContent());
         article.setDescription(articleDTO.getDescription());
+        article.setComments(articleDTO.getComments());
         return article;
     }
 

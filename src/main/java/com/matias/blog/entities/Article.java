@@ -1,5 +1,6 @@
 package com.matias.blog.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Article {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Comment> comments = new HashSet<>();
 }
