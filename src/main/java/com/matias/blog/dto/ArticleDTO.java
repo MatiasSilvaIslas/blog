@@ -19,12 +19,12 @@ import java.util.Set;
 public class ArticleDTO {
     private Long id;
     @NotEmpty
-    @Size(min = 2, message = "The article title should have at least two characters.")
+    @Size(min = 3, message = "The article title should have at least three characters.")
     private String title;
     @NotEmpty
     @Size(min = 10, message = "The article description should have at least ten characters.")
     private String description;
-    @NotEmpty
+    @NotEmpty(message = "should not be empty")
     private String content;
     private Set<Comment> comments;
 }

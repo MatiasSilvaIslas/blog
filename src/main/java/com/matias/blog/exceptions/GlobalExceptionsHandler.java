@@ -45,7 +45,7 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 
             errors.put(fieldName, message);
         });
-        
+
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

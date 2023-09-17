@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +30,7 @@ public class Article {
     private String description;
     @Column(name = "content", nullable = false)
     private String content;
-
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
     @JsonBackReference
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Comment> comments = new HashSet<>();
