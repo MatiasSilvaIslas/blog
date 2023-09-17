@@ -13,16 +13,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
-    @Column(unique = true, name = "USER_NAME")
+    @Column(unique = true, name = "user_name")
     private String userName;
     @NotNull
     @Email
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
     @NotNull
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,18 +28,19 @@ public class ArticleController {
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable(name = "id") long id){
         return  ResponseEntity.ok(articleService.getArticleById(id));
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ArticleDTO> saveArticle(@Valid @RequestBody ArticleDTO articleDTO){
         return new ResponseEntity<>(articleService.createArticle(articleDTO), HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ArticleDTO> updateArticle(@Valid @RequestBody ArticleDTO articleDTO,
     @PathVariable(name = "id") long id){
         ArticleDTO responseArticle = articleService.updateArticle(articleDTO, id);
         return new ResponseEntity<>(responseArticle, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable(name = "id") long id){
         articleService.deleteArticle(id);

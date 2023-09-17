@@ -30,7 +30,6 @@ public class Article {
     private String description;
     @Column(name = "content", nullable = false)
     private String content;
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
     @JsonBackReference
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Comment> comments = new HashSet<>();

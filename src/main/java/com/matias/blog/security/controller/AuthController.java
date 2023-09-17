@@ -46,14 +46,14 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUser, BindingResult bindingResult){
+    @PostMapping("/newUser")
+    public ResponseEntity<?> newUser(@Valid @RequestBody NewUserDto newUser, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity(new Message("wrong fields or invalid email\n"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message("wrong fields or invalid email\n"), HttpStatus.BAD_REQUEST);
         if(userService.existByUserName(newUser.getUserName()))
-            return new ResponseEntity(new Message("username is already taken"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message("username is already taken"), HttpStatus.BAD_REQUEST);
         if(userService.existByEmail(newUser.getEmail()))
-            return new ResponseEntity(new Message("email is already taken"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message("email is already taken"), HttpStatus.BAD_REQUEST);
         User user =
                 new User(newUser.getName(), newUser.getUserName(), newUser.getEmail(),
                         passwordEncoder.encode(newUser.getPassword()));
@@ -63,19 +63,19 @@ public class AuthController {
             roles.add(roleService.getByRoleType(RoleType.ROLE_ADMIN).get());
         user.setRoles(roles);
         userService.save(user);
-        return new ResponseEntity(new Message("saved user"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Message("saved user"), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUserDto loginUser, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity(new Message("campos mal puestos"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("It looks like there are some errors in the information you provided"), HttpStatus.BAD_REQUEST);
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUserName(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails)authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-        return new ResponseEntity(jwtDto, HttpStatus.OK);
+        return new ResponseEntity<>(jwtDto, HttpStatus.OK);
     }
 }
